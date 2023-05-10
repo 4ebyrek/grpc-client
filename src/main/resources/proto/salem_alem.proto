@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_package = "com.eldarbay.grpc.server.demo.grpc";
+
+option java_multiple_files = true;
+
+message Ping {
+  message NestedPing {
+    string message = 1;
+  }
+  string phrase_from_ping = 1;
+  NestedPing nested_ping = 2;
+}
+
+message Pong {
+  oneof response {
+    SuccessResponse success_response = 1;
+    ErrorResponse error_response = 2;
+  }
+}
+
+message SuccessResponse {
+  string phrase_from_pong = 3;
+}
+
+message ErrorResponse {
+  string code = 1;
+  string message = 2;
+}
+
+service SuperService {
+  rpc ping(Ping) returns (Pong);
+}
+
+
+
